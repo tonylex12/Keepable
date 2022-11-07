@@ -1,0 +1,76 @@
+/* import remixicon */
+@import url("https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css");
+
+/* Global */
+* {
+  box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #fff;
+    background-color: #1D2128;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+
+.header {
+    background-color: #1D2128;
+    padding: 20px;
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #fff;
+}
+
+.welcome {
+  margin-left: 8.5rem;
+}
+
+.main-section {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.aside {
+    width: 15%;
+    height: 100%;
+    background-color: #1D2128;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #fff;
+    position: relative;
+}
+
+.aside-options {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-start;
+  top: 0;
+  left: 0;
+  margin: .25rem 0;
+  padding: 0;
+  width: 100%;
+}
+
+.aside-icons {
+  color: #fff;
+  vertical-align: top;
+  margin: 0 1rem;
+}
+
+.aside-btn:hover {
+  color: #fff;
+  background-color: #999B9E;
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  cursor: pointer;
+}
