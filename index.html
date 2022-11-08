@@ -22,7 +22,7 @@
   <section class="main-section">
     <aside class="aside">
       <div class="aside-options">
-        <div class="aside-btn">
+        <div class="aside-btn" onclick="renderNotes('noteContainer')">
           <p><i class="ri-braces-line aside-icons"></i>Notes</p>
         </div>
         <div class="aside-btn">
@@ -36,7 +36,7 @@
         <div class="form-maker">
           <input type="text" name="title" placeholder="Title" id="titleNote">
           <textarea name="note" rows="6" cols="60" placeholder="Take a note..." id="textNote"></textarea>
-          <span onclick="showPalette()"><i class="ri-palette-fill ri-2x"></i></span>
+          <span onclick="showPalette('palette')"><i class="ri-palette-fill ri-2x"></i></span>
           <button type="submit" name="button" class="btn-keep" id="createNote" onclick="createNote()">Keep it!</button>
           <div class="palette" id="palette">
             <button class="color" style="background-color: #fff" onclick="changeColor('#fff')"></button>

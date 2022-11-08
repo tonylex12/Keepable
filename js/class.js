@@ -5,7 +5,7 @@ class Note {
     this.bgColor = bgColor;
     this.pinned = pinned;
     this.inTrash = inTrash;
-    this.id = Math.random().toString(36).substr(2, 9);
+    this.id = Date.now().toString(36);
   }
 
   changeBgColor(color) {
