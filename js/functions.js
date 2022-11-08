@@ -26,13 +26,13 @@ const renderNotes = (container) => {
                                 <p>${note.text}</p>
                               </div>
                               <div class="card-header__buttons">
-                                <span onclick="showPalette('${note.bgColor}')"><i class="ri-palette-fill ri-2x"></i>
+                                <span onclick="showPalette('${note.bgColor}${note.id}')"><i class="ri-palette-fill ri-2x"></i>
                                 </span>
                                 <span class="card-header__button card-header__button--delete">
                                   <i class="ri-delete-bin-line ri-2x deleteBtn" id="${note.id}"></i>
                                 </span>
                               </div>
-                              <div class="palette" id="${note.bgColor}">
+                              <div class="palette" id="${note.bgColor}${note.id}">
                                 <button class="colorBtn #fff" id="${note.id}" style="background-color: #fff"></button>
                                 <button class="colorBtn #f28b82" id="${note.id}" style="background-color: #f28b82"></button>
                                 <button class="colorBtn #fbbc04" id="${note.id}" style="background-color: #fbbc04"></button>  
@@ -55,6 +55,7 @@ const renderNotes = (container) => {
   for (let i = 0; i < deleteButtons.length; i++) {
     deleteButtons[i].addEventListener('click', deleteNote);
   }
+  localStorage.setItem('notesLS', JSON.stringify(notes));
 }
 
 
@@ -84,7 +85,9 @@ const changeBgColor = (e) => {
     }
   })
   // RENDER NOTES
+  localStorage.setItem('notesLS', JSON.stringify(notes));
   renderNotes(notesContainer);
+
 }
 
 const deleteNote = (e) => {
@@ -94,6 +97,7 @@ const deleteNote = (e) => {
       note.deleteNote();
     }
   })
+  localStorage.setItem('notesLS', JSON.stringify(notes));
   renderNotes(notesContainer);
 }
 
@@ -134,6 +138,7 @@ const renderTrash = (container) => {
   for (let i = 0; i < deleteTotalButtons.length; i++) {
     deleteTotalButtons[i].addEventListener('click', deleteTotal);
   }
+  localStorage.setItem('notesLS', JSON.stringify(notes));
 }
 
 
@@ -144,6 +149,7 @@ const restoreNote = (e) => {
       note.restoreNote();
     }
   })
+  localStorage.setItem('notesLS', JSON.stringify(notes));
   renderTrash(notesContainer);
 }
 
@@ -154,5 +160,6 @@ const deleteTotal = (e) => {
       note.deleteTotal();
     }
   })
+  localStorage.setItem('notesLS', JSON.stringify(notes));
   renderTrash(notesContainer);
 }

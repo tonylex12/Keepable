@@ -1,11 +1,11 @@
 class Note {
-  constructor(title, text, bgColor="white", pinned=false, inTrash=false) {
+  constructor(title, text, bgColor="white", pinned=false, inTrash=false, id=`${Date.now()}${Math.floor(Math.random() * 100000)}`) {
     this.title = title;
     this.text = text;
     this.bgColor = bgColor;
     this.pinned = pinned;
     this.inTrash = inTrash;
-    this.id = Date.now().toString(36);
+    this.id = id;
   }
 
   changeBgColor(color) {
@@ -36,3 +36,4 @@ class Note {
     notes = notes.filter(note => note.id !== this.id);
   }
 }
+
