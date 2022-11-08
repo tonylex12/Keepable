@@ -49,4 +49,5 @@ const changeColor = (color) => {
   let note = document.getElementsByClassName('form-maker')[0];
   note.style.backgroundColor = color;
   colorBg = color;
+  showPalette();
 }
