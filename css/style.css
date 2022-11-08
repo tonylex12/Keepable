@@ -160,9 +160,18 @@ input:focus {
 }
 
 .ri-palette-fill,
-.ri-delete-bin-line {
+.ri-delete-bin-line,
+.ri-refresh-line {
 	cursor: pointer;
 }
+
+.ri-palette-fill:hover,
+.ri-delete-bin-line:hover,
+.ri-refresh-line:hover {
+	scale: 1.1;
+}
+
+
 
 #notesTitle {
 	position: absolute;

@@ -7,7 +7,7 @@ const createNote = () => {
   notes.push(note);
   document.getElementById('titleNote').value = '';
   document.getElementById('textNote').value = '';
-  renderNotes(noteContainer);
+  renderNotes(notesContainer);
 } 
 
 const renderNotes = (container) => {
@@ -26,13 +26,13 @@ const renderNotes = (container) => {
                                 <p>${note.text}</p>
                               </div>
                               <div class="card-header__buttons">
-                                <span onclick="showPalette('palette2')"><i class="ri-palette-fill ri-2x"></i>
+                                <span onclick="showPalette('${note.bgColor}')"><i class="ri-palette-fill ri-2x"></i>
                                 </span>
                                 <span class="card-header__button card-header__button--delete">
                                   <i class="ri-delete-bin-line ri-2x deleteBtn" id="${note.id}"></i>
                                 </span>
                               </div>
-                              <div class="palette" id="palette2">
+                              <div class="palette" id="${note.bgColor}">
                                 <button class="colorBtn #fff" id="${note.id}" style="background-color: #fff"></button>
                                 <button class="colorBtn #f28b82" id="${note.id}" style="background-color: #f28b82"></button>
                                 <button class="colorBtn #fbbc04" id="${note.id}" style="background-color: #fbbc04"></button>  
@@ -49,13 +49,14 @@ const renderNotes = (container) => {
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', changeBgColor);
   }
-
+  
   // Add event listener to each delete button
   let deleteButtons = document.getElementsByClassName('deleteBtn');
   for (let i = 0; i < deleteButtons.length; i++) {
     deleteButtons[i].addEventListener('click', deleteNote);
   }
 }
+
 
 const showPalette = (id) => {
   let palette = document.getElementById(id)
@@ -83,7 +84,7 @@ const changeBgColor = (e) => {
     }
   })
   // RENDER NOTES
-  renderNotes(noteContainer);
+  renderNotes(notesContainer);
 }
 
 const deleteNote = (e) => {
@@ -93,5 +94,65 @@ const deleteNote = (e) => {
       note.deleteNote();
     }
   })
-  renderNotes(noteContainer);
+  renderNotes(notesContainer);
+}
+
+const renderTrash = (container) => {
+  if (notes.some(note => note.inTrash === true)) {
+    document.getElementById('notesTitle').innerHTML = `<h1>Trash</h1>`;
+  } else {
+    document.getElementById('notesTitle').innerHTML = `<h1>Trash is empty</h1>`;
+  }
+  container.innerHTML = '';
+  notes.filter(note => note.inTrash === true).forEach(note => {
+    container.innerHTML += `<div class="card-header" style="background-color: ${note.bgColor}">
+                              <div class="card-header__title">
+                                <h3>${note.title}</h3>
+                              </div>
+                              <div class="card-header__text">
+                                <p>${note.text}</p>
+                              </div>
+                              <div class="card-header__buttons">
+                                <span class="card-header__button card-header__button--restore">
+                                  <i class="ri-refresh-line ri-2x restoreBtn" id="${note.id}"></i>
+                                </span>
+                                <span class="card-header__button card-header__button--delete">
+                                  <i class="ri-delete-bin-line ri-2x deleteTotalBtn" id="${note.id}"></i>
+                                </span>
+                              </div>
+                            </div>`
+  })
+
+  // Add event listener to each restore button
+  let restoreButtons = document.getElementsByClassName('restoreBtn');
+  for (let i = 0; i < restoreButtons.length; i++) {
+    restoreButtons[i].addEventListener('click', restoreNote);
+  }
+  
+  // Add event listener to each delete button
+  let deleteTotalButtons = document.getElementsByClassName('deleteTotalBtn');
+  for (let i = 0; i < deleteTotalButtons.length; i++) {
+    deleteTotalButtons[i].addEventListener('click', deleteTotal);
+  }
+}
+
+
+const restoreNote = (e) => {
+  const idNote = e.target.id;
+  notes.forEach(note => {
+    if (note.id === idNote) {
+      note.restoreNote();
+    }
+  })
+  renderTrash(notesContainer);
+}
+
+const deleteTotal = (e) => {
+  const idNote = e.target.id;
+  notes.forEach(note => {
+    if (note.id === idNote) {
+      note.deleteTotal();
+    }
+  })
+  renderTrash(notesContainer);
 }

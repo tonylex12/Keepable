@@ -31,4 +31,8 @@ class Note {
   restoreNote() {
     this.inTrash = false;
   }
+
+  deleteTotal() {
+    notes = notes.filter(note => note.id !== this.id);
+  }
 }
