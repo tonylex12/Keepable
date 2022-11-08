@@ -34,13 +34,34 @@
       <div class="note-maker">
         <!-- Form to create notes-->
         <div class="form-maker">
-          <input type="text" name="title" placeholder="Title" class="title">
-          <textarea name="note" rows="6" cols="60" placeholder="Take a note..." class="note"></textarea>
-          <span><i class="ri-palette-fill ri-2x"></i></span>
-          <button type="submit" name="button" class="btn-keep">Keep it!</button>
+          <input type="text" name="title" placeholder="Title" id="titleNote">
+          <textarea name="note" rows="6" cols="60" placeholder="Take a note..." id="textNote"></textarea>
+          <span onclick="showPalette()"><i class="ri-palette-fill ri-2x"></i></span>
+          <button type="submit" name="button" class="btn-keep" id="createNote" onclick="createNote()">Keep it!</button>
+          <div class="palette" id="palette">
+            <button class="color" style="background-color: #fff" onclick="changeColor('#fff')"></button>
+            <button class="color" style="background-color: #f28b82" onclick="changeColor('#f28b82')"></button>
+            <button class="color" style="background-color: #fbbc04" onclick="changeColor('#fbbc04')"></button>  
+            <button class="color" style="background-color: #ccff90" onclick="changeColor('#ccff90')"></button>
+            <button class="color" style="background-color: #a7ffeb" onclick="changeColor('#a7ffeb')"></button>
+            <button class="color" style="background-color: #aecbfa" onclick="changeColor('#aecbfa')"></button>
+            <button class="color" style="background-color: #d7aefb" onclick="changeColor('#d7aefb')"></button>
+            <button class="color" style="background-color: #fdcfe8" onclick="changeColor('#fdcfe8')"></button>
+          </div>
         </div>
+      </div>
+
+      <!-- Notes -->
+      <div id="notesTitle"></div>
+      <div id="notesContainer">
+
       </div>
     </main>
   </section>
+
+  <script src="js/class.js"></script>
+  <script src="js/functions.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/trash.js"></script>
 </body>
 </html>

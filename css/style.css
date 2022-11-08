@@ -20,6 +20,7 @@ textarea,
 input {
 	resize: none;
 	border: none;
+	background-color: transparent;
 }
 
 textarea:focus,
@@ -117,6 +118,29 @@ input:focus {
 	padding: .5rem;
 }
 
+.palette {
+	position: absolute;
+	bottom: 3.5rem;
+	left: .5rem;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 120px;
+	background-color: rgba(29, 33, 40, .8);
+	border-radius: .75rem;
+	z-index: 1;
+	opacity: 0;
+}
+
+.color {
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	margin: 5px;
+	cursor: pointer;
+	border: none;
+}
+
 .btn-keep {
   position: absolute;
   bottom: 0;
@@ -132,4 +156,43 @@ input:focus {
 
 .btn-keep:hover {
 	scale: 1.1;
+}
+
+.ri-palette-fill {
+	cursor: pointer;
+}
+
+#notesTitle {
+	position: absolute;
+	top: 18rem;
+	left: 3rem;
+}
+
+#notesContainer {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+}
+
+.card-header {
+	color: #333;
+	position: relative;
+	width: 200px;
+	height: 200px;
+	margin: 0 1rem;
+	padding: 1rem;
+	border-radius: .75rem;
+}
+
+.card-header__buttons {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	padding: 0 1rem;
 }
