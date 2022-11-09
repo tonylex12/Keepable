@@ -3,6 +3,8 @@ let colorBg = '#fff';
 
 const notesContainer = document.getElementById('notesContainer');
 
+const pinnedNotesContainer = document.getElementById('pinnedNotesContainer');
+
 const notesFromLocalStorage = JSON.parse(localStorage.getItem('notesLS'));
 
 // If there are notes in localStorage, render them

@@ -22,6 +22,9 @@ const renderNotes = (container) => {
   container.innerHTML = '';
   notes.filter(note => note.inTrash === false).forEach(note => {
     container.innerHTML += `<div class="card-header" style="background-color: ${note.bgColor}">
+                              <div class="pin">
+                                <i class="ri-pushpin-2-fill pinBtn" id="${note.id}"></i>
+                              </div>
                               <div class="card-header__title">
                                 <h3>${note.title}</h3>
                               </div>
@@ -58,6 +61,72 @@ const renderNotes = (container) => {
   for (let i = 0; i < deleteButtons.length; i++) {
     deleteButtons[i].addEventListener('click', deleteNote);
   }
+
+  // Add event listener to each pin button
+  let pinButtons = document.getElementsByClassName('pinBtn');
+  for (let i = 0; i < pinButtons.length; i++) {
+    pinButtons[i].addEventListener('click', pinNote);
+  }
+
+  localStorage.setItem('notesLS', JSON.stringify(notes));
+}
+
+const renderPinnedNotes = (container) => {
+  if (notes.some(note => note.pinned === true)) {
+    document.getElementById('pinnedNotesTitle').innerHTML = `<h1>Pinned Notes</h1>`;
+  } else {
+    document.getElementById('pinnedNotesTitle').innerHTML = "";
+  }
+
+  container.innerHTML = '';
+  notes.filter(note => note.pinned === true).forEach(note => {
+    container.innerHTML += `<div class="card-header" style="background-color: ${note.bgColor}">
+                              <div class="pin">
+                                <i class="ri-pushpin-2-fill pinBtn" id="${note.id}"></i>
+                              </div>
+                              <div class="card-header__title">
+                                <h3>${note.title}</h3>
+                              </div>
+                              <div class="card-header__text">
+                                <p>${note.text}</p>
+                              </div>
+                              <div class="card-header__buttons">
+                                <span onclick="showPalette('${note.bgColor}${note.id}')"><i class="ri-palette-fill ri-2x"></i>
+                                </span>
+                                <span class="card-header__button card-header__button--delete">
+                                  <i class="ri-delete-bin-line ri-2x deleteBtn" id="${note.id}"></i>
+                                </span>
+                              </div>
+                              <div class="palette" id="${note.bgColor}${note.id}">
+                                <button class="colorBtn #fff" id="${note.id}" style="background-color: #fff"></button>
+                                <button class="colorBtn #f28b82" id="${note.id}" style="background-color: #f28b82"></button>
+                                <button class="colorBtn #fbbc04" id="${note.id}" style="background-color: #fbbc04"></button>
+                                <button class="colorBtn #ccff90" id="${note.id}" style="background-color: #ccff90"></button>
+                                <button class="colorBtn #a7ffeb" id="${note.id}" style="background-color: #a7ffeb"></button>
+                                <button class="colorBtn #aecbfa" id="${note.id}" style="background-color: #aecbfa"></button>
+                                <button class="colorBtn #d7aefb" id="${note.id}" style="background-color: #d7aefb"></button>
+                                <button class="colorBtn #fdcfe8" id="${note.id}" style="background-color: #fdcfe8"></button>
+                              </div>
+                            </div>`
+  })
+  // Add event listener to each button
+  let buttons = document.getElementsByClassName('colorBtn');
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', changeBgColor);
+  } 
+
+  // Add event listener to each delete button
+  let deleteButtons = document.getElementsByClassName('deleteBtn');
+  for (let i = 0; i < deleteButtons.length; i++) {
+    deleteButtons[i].addEventListener('click', deleteNote);
+  }
+
+  // Add event listener to each pin button
+  let pinButtons = document.getElementsByClassName('pinBtn');
+  for (let i = 0; i < pinButtons.length; i++) {
+    pinButtons[i].addEventListener('click', pinNote);
+  }
+
   localStorage.setItem('notesLS', JSON.stringify(notes));
 }
 
@@ -76,6 +145,17 @@ const changeColor = (color) => {
   note.style.backgroundColor = color;
   colorBg = color;
   showPalette('palette');
+}
+
+const pinNote = (e) => {
+  const idNote = e.target.id;
+  notes.forEach(note => {
+    if (note.id === idNote) {
+      note.pinNote();
+    }
+  })
+  localStorage.setItem('notesLS', JSON.stringify(notes));
+  renderPinnedNotes(pinnedNotesContainer);
 }
 
 const changeBgColor = (e) => {
@@ -112,6 +192,7 @@ const renderTrash = (container) => {
   }
 
   document.getElementsByClassName('form-maker')[0].style.display = 'none';
+  document.getElementById('pinnedNotesContainer').style.display = 'none';
 
   container.innerHTML = '';
   notes.filter(note => note.inTrash === true).forEach(note => {

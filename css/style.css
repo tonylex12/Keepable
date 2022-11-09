@@ -100,12 +100,10 @@ input:focus {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
 }
 
 .note-maker {
   position: relative;
-  /* top: 6rem; */
   margin-top: 5rem;
 }
 
@@ -171,12 +169,14 @@ input:focus {
 	scale: 1.1;
 }
 
-#notesTitle {
+#notesTitle,
+#pinnedNotesTitle {
 	margin-right: auto;
 	margin-left: 1rem;
 }
 
-#notesContainer {
+#notesContainer,
+#pinnedNotesContainer {
 	width: 100%;
 	display: flex;
 	align-items: center;
@@ -196,10 +196,12 @@ input:focus {
 
 .card-header h3 {
 	margin: .5rem auto;
+	font-size: 1.25rem;
 }
 
 .card-header p {
 	margin: .5rem 0;
+	font-size: 1rem;
 }
 
 .card-header__title {
@@ -228,4 +230,50 @@ input:focus {
 	justify-content: space-between;
 	width: 100%;
 	padding: 0 1rem;
+}
+
+.pin {
+	position: absolute;
+	top: .5rem;
+	right: 1rem;
+	font-size: 1.25rem;
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	border-radius: 50%;
+	color: rgba(29, 33, 40, .8);
+	cursor: pointer;
+	background-color: rgba(29, 33, 40, .3);
+}
+
+@media (min-width: 320px) and (max-width: 768px) {
+	.header {
+		padding: 1rem;
+	}
+	.welcome {
+		margin-left: 3.25rem;
+	}
+	.aside {
+		width: 30%;
+		top: 4rem;
+	}
+	.main {
+		left: 30%;
+		width: 70%;
+	}
+	.note-maker {
+		margin-top: 3.25rem;
+		width: 200px;
+	}
+	.card-header {
+		width: 260px;
+	}
+
+	.card-header h3 {
+		font-size: 1rem;
+	}
+	.pin {
+		right: .5rem;
+		top: .5rem;
+	}
 }
