@@ -16,6 +16,9 @@ const renderNotes = (container) => {
   } else {
     document.getElementById('notesTitle').innerHTML = `<h1>There are no notes</h1>`;
   }
+
+  document.getElementsByClassName('form-maker')[0].style.display = 'flex';
+
   container.innerHTML = '';
   notes.filter(note => note.inTrash === false).forEach(note => {
     container.innerHTML += `<div class="card-header" style="background-color: ${note.bgColor}">
@@ -107,6 +110,9 @@ const renderTrash = (container) => {
   } else {
     document.getElementById('notesTitle').innerHTML = `<h1>Trash is empty</h1>`;
   }
+
+  document.getElementsByClassName('form-maker')[0].style.display = 'none';
+
   container.innerHTML = '';
   notes.filter(note => note.inTrash === true).forEach(note => {
     container.innerHTML += `<div class="card-header" style="background-color: ${note.bgColor}">
