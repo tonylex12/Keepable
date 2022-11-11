@@ -21,7 +21,7 @@ const renderNotes = (container) => {
 
   container.innerHTML = '';
   notes.filter(note => note.inTrash === false).forEach(note => {
-    container.innerHTML += `<div class="card-header" style="background-color: ${note.bgColor}">
+    container.innerHTML += `<div class="card-header note" id="${note.id}" style="background-color: ${note.bgColor}">
                               <div class="pin">
                                 <i class="ri-pushpin-2-fill pinBtn" id="${note.id}"></i>
                               </div>
@@ -50,6 +50,13 @@ const renderNotes = (container) => {
                               </div>
                             </div>`
   })
+
+  // Add event listener to each note class
+  let note = document.getElementsByClassName('note');
+  for (let i = 0; i < note.length; i++) {
+    note[i].addEventListener('click', editView);
+  }
+
   // Add event listener to each button
   let buttons = document.getElementsByClassName('colorBtn');
   for (let i = 0; i < buttons.length; i++) {
@@ -91,24 +98,13 @@ const renderPinnedNotes = (container) => {
                                 <p>${note.text}</p>
                               </div>
                               <div class="card-header__buttons">
-                                <span onclick="showPalette('${note.bgColor}${note.id}')"><i class="ri-palette-fill ri-2x"></i>
-                                </span>
                                 <span class="card-header__button card-header__button--delete">
                                   <i class="ri-delete-bin-line ri-2x deleteBtn" id="${note.id}"></i>
                                 </span>
                               </div>
-                              <div class="palette" id="${note.bgColor}${note.id}">
-                                <button class="colorBtn #fff" id="${note.id}" style="background-color: #fff"></button>
-                                <button class="colorBtn #f28b82" id="${note.id}" style="background-color: #f28b82"></button>
-                                <button class="colorBtn #fbbc04" id="${note.id}" style="background-color: #fbbc04"></button>
-                                <button class="colorBtn #ccff90" id="${note.id}" style="background-color: #ccff90"></button>
-                                <button class="colorBtn #a7ffeb" id="${note.id}" style="background-color: #a7ffeb"></button>
-                                <button class="colorBtn #aecbfa" id="${note.id}" style="background-color: #aecbfa"></button>
-                                <button class="colorBtn #d7aefb" id="${note.id}" style="background-color: #d7aefb"></button>
-                                <button class="colorBtn #fdcfe8" id="${note.id}" style="background-color: #fdcfe8"></button>
-                              </div>
                             </div>`
   })
+  
   // Add event listener to each button
   let buttons = document.getElementsByClassName('colorBtn');
   for (let i = 0; i < buttons.length; i++) {
@@ -133,10 +129,12 @@ const renderPinnedNotes = (container) => {
 
 const showPalette = (id) => {
   let palette = document.getElementById(id)
-  if (palette.style.opacity === '0') {
-    palette.style.opacity = '1';
+  if (palette.style.display === "none") {
+    palette.style.display = "flex";
+    palette.style.flexDirection = "row";
+    palette.style.flexWrap = "wrap";
   } else {
-    palette.style.opacity = '0';
+    palette.style.display = "none";
   }
 }
 
@@ -148,6 +146,7 @@ const changeColor = (color) => {
 }
 
 const pinNote = (e) => {
+  e.stopPropagation();
   const idNote = e.target.id;
   notes.forEach(note => {
     if (note.id === idNote) {
@@ -159,6 +158,7 @@ const pinNote = (e) => {
 }
 
 const changeBgColor = (e) => {
+  e.stopPropagation();
   const idNote = e.target.id;
   const color = e.target.classList[1];
   // CHANGE BG COLOR OF THE NOTE
@@ -174,6 +174,7 @@ const changeBgColor = (e) => {
 }
 
 const deleteNote = (e) => {
+  e.stopPropagation();
   const idNote = e.target.id;
   notes.forEach(note => {
     if (note.id === idNote) {
@@ -249,4 +250,36 @@ const deleteTotal = (e) => {
   })
   localStorage.setItem('notesLS', JSON.stringify(notes));
   renderTrash(notesContainer);
+}
+
+const editView = (e) => { 
+  const idNote = e.target.id;
+  const modal = document.createElement('div');
+  modal.classList.add('modal');
+  modal.innerHTML = `<div class="modal__content">
+                        <div class="modal__header">
+                          <input type="text" class="modal__title" placeholder="Title" value="${notes.find(note => note.id === idNote).title}">
+                          <textarea class="modal__text" placeholder="Text">${notes.find(note => note.id === idNote).text}</textarea>
+                        </div>
+                        <button class="modal__button" id="${idNote}">Keep it!</button>
+                      </div>`
+  const modalContent = modal.querySelector('.modal__content');
+  modalContent.style.backgroundColor = notes.find(note => note.id === idNote).bgColor;
+  document.body.appendChild(modal);
+  const modalButton = modal.querySelector('.modal__button');
+  modalButton.addEventListener('click', editNote);
+}
+
+const editNote = (e) => {
+  const idNote = e.target.id;
+  const title = document.querySelector('.modal__title').value;
+  const text = document.querySelector('.modal__text').value;
+  notes.forEach(note => {
+    if (note.id === idNote) {
+      note.editNote(title, text);
+    }
+  })
+  localStorage.setItem('notesLS', JSON.stringify(notes));
+  renderNotes(notesContainer);
+  document.querySelector('.modal').remove();
 }

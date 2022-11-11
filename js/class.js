@@ -12,11 +12,8 @@ class Note {
     this.bgColor = color;
   }
 
-  changeTitle(title) {
+  editNote(title, text) {
     this.title = title;
-  }
-  
-  changeText(text) {
     this.text = text;
   }
 
